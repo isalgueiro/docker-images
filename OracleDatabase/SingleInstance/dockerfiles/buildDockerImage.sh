@@ -52,6 +52,11 @@ checksumPackages() {
 checkDockerVersion() {
   # Get Docker Server version
   DOCKER_VERSION=$(docker version --format '{{.Server.Version | printf "%.5s" }}')
+  DOCKER_RETURN_CODE=$?
+  if [ "$DOCKER_RETURN_CODE" -ne "0" ]; then
+    echo "Error getting Docker version."
+    exit 1;
+  fi
   # Remove dot in Docker version
   DOCKER_VERSION=${DOCKER_VERSION//./}
 
